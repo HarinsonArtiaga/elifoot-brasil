@@ -1,0 +1,4 @@
+import test from 'node:test'; import assert from 'node:assert/strict'; import {CLUBS} from '../data.js'; import {emptyTable, playMatch, tableRows} from '../engine.js';
+test('Série A 2026 has 20 clubs',()=>assert.equal(CLUBS.length,20));
+test('match updates points and goals',()=>{const state={clubs:Object.fromEntries(CLUBS.map(c=>[c.id,c])),table:emptyTable(CLUBS)}; const m=playMatch(state,0,1,()=>0.9); assert.equal(m.home,'Athletico-PR'); assert.equal(state.table[0].played,1); assert.equal(state.table[1].played,1); assert.equal(state.table[0].goalsFor+state.table[1].goalsFor,state.table[0].goalsAgainst+state.table[1].goalsAgainst); assert.equal(state.table[0].points+state.table[1].points,3);});
+test('table is sorted by points',()=>{const state={clubs:Object.fromEntries(CLUBS.map(c=>[c.id,c])),table:emptyTable(CLUBS)}; state.table[3].points=9; state.table[4].points=3; assert.equal(tableRows(state)[0].clubId,3);});
