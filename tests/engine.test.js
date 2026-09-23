@@ -1,4 +1,4 @@
-import test from 'node:test'; import assert from 'node:assert/strict'; import {CLUBS,makeFreeAgents,makeSquad} from '../data.js'; import {emptyTable,playRound,tableRows,tacticStrength,chooseLineup,schedule} from '../engine.js';
+import test from 'node:test'; import assert from 'node:assert/strict'; import {CLUBS,makeFreeAgents,makeSquad} from '../data.js'; import {emptyTable,playRound,tableRows,tacticStrength,chooseLineup,schedule,teamStrength} from '../engine.js';
 test('Série A 2026 has 20 clubs',()=>assert.equal(CLUBS.length,20));
 test('round simulates every club exactly once',()=>{const state={clubs:Object.fromEntries(CLUBS.map(c=>[c.id,c])),table:emptyTable(CLUBS),tactics:{}};const games=playRound(state,1,()=>.9);assert.equal(games.length,10);assert.equal(Object.values(state.table).every(t=>t.played===1),true);});
 test('match updates points and goals',()=>{const state={clubs:Object.fromEntries(CLUBS.map(c=>[c.id,c])),table:emptyTable(CLUBS),tactics:{}};playRound(state,1,()=>.9);assert.equal(Object.values(state.table).reduce((n,t)=>n+t.points,0),30);});
@@ -6,4 +6,5 @@ test('table is sorted by points',()=>{const state={clubs:Object.fromEntries(CLUB
 test('tactics alter effective strength',()=>assert.equal(tacticStrength(80,{formation:'4-3-3',style:'attacking'})>tacticStrength(80,{formation:'5-3-2',style:'defensive'}),true));
 test('free agent base has players without club',()=>{const fa=makeFreeAgents();assert.equal(fa.length>=40,true);assert.equal(fa.every(p=>p.clubId===null&&p.price>0),true);});
 test('automatic lineup selects 11 starters by formation',()=>{const lineup=chooseLineup(makeSquad(CLUBS[0]),{formation:'4-3-3'});assert.equal(lineup.starters.length,11);assert.equal(lineup.reserves.length,9);assert.equal(lineup.starters.filter(p=>p.role==='GK').length,1);});
+test('team strength reflects starter rating and morale',()=>{const squad=makeSquad(CLUBS[0]);const state={clubs:{0:CLUBS[0]},clubSquads:{0:squad},tactics:{0:{formation:'4-4-2',style:'balanced'}},lineups:{}};const before=teamStrength(state,0);state.clubSquads[0]=squad.map(p=>({...p,rating:p.rating+10,morale:100}));assert.equal(teamStrength(state,0)>before,true);});
 test('schedule randomizes home and away',()=>{let i=0;const games=schedule(CLUBS,()=>((i++%2)?0.9:0.1));assert.equal(games.some(g=>g.home===0),true);assert.equal(games.some(g=>g.away===0),true);});
