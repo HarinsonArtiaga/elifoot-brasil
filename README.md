@@ -2,14 +2,11 @@
 
 Recriação original, jogável no navegador, inspirada na simplicidade dos managers de futebol do início dos anos 2000. Não usa código, arte, textos ou marca do Elifoot.
 
-## Rodar localmente
+## Jogar
 
-```bash
-cd /home/hari/elifoot-brasil
-python -m http.server 4173
-```
+Acesse a versão publicada em:
 
-Abra http://127.0.0.1:4173/.
+https://harinsonartiaga.github.io/elifoot-brasil/
 
 ## Incluído nesta primeira versão
 
