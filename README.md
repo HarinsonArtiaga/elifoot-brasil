@@ -13,7 +13,9 @@ https://harinsonartiaga.github.io/elifoot-brasil/
 - Brasileirão Série A 2026 com 20 clubes.
 - Escolha de qualquer clube como treinador.
 - Elenco gerado com posição, idade, força e moral.
-- Avanço de rodadas com simulação de placar e pontuação.
+- Avanço de rodadas com simulação de placar e pontuação para todos os 10 jogos da rodada.
+- Mercado de transferências com jogadores, preços, clubes vendedores e contratação.
+- Tática avançada com formações 4-4-2, 4-3-3, 3-5-2 e 5-3-2, além de estilos de jogo.
 - Classificação, calendário, caixa e painel de temporada.
 - Salvamento no `localStorage` do navegador.
 - Layout responsivo para computador e celular.
